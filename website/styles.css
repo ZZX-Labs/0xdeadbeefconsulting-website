@@ -5,49 +5,139 @@
     box-sizing: border-box;
 }
 
-/* Styling the body */
+/* Body */
 body {
-    background-color: #121212; /* Black with a hint of gray */
-    color: #c0d674; /* Main text color */
+    background-color: #121212;
+    color: #c0d674;
     font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Header */
+.header {
+    background-color: #181818;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    height: 100vh;
+    padding: 10px 20px;
+    border-bottom: 1px solid #333;
 }
 
-/* Main container */
-.container {
-    text-align: center;
-    padding: 20px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* Logo */
+.logo img {
+    width: 40px;
+    height: 40px;
+}
+
 .logo h1 {
-    font-size: 2rem;
-    color: #ffffff; /* Pure white for logo */
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+    font-size: 1.5rem;
+    color: #ffffff;
 }
 
-/* Main content */
-.main-content p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: #c0d674; /* Accent green */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-/* Footer */
-footer {
-    margin-top: 20px;
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: #c0d674;
+    border-radius: 2px;
 }
 
-.contact a {
+/* Navigation */
+.nav {
+    display: flex;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
     color: #c0d674;
     text-decoration: none;
     transition: color 0.3s;
 }
 
-.contact a:hover {
-    color: #ff6f61; /* Soft red as an accent */
+.menu a:hover {
+    color: #ff6f61; /* Accent color */
+}
+
+/* Submenu */
+.submenu > ul {
+    display: none;
+    position: absolute;
+    background-color: #181818;
+    list-style: none;
+    padding: 10px 0;
+    border: 1px solid #333;
+    z-index: 1;
+}
+
+.submenu:hover > ul {
+    display: block;
+}
+
+.submenu ul li {
+    padding: 10px 20px;
+}
+
+.submenu ul li a {
+    color: #c0d674;
+}
+
+/* Main Sections */
+.section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.section h2 {
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.section p {
+    color: #c0d674;
+    line-height: 1.8;
+}
+
+/* Footer */
+.footer {
+    background-color: #181818;
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #333;
+    color: #c0d674;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+    .nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+    .nav.active {
+        display: flex;
+    }
+    .menu {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
