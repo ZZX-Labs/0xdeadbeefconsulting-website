@@ -1,143 +1,364 @@
-/* General reset */
+/* ========== Global Reset ========== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body */
-body {
-    background-color: #121212;
-    color: #c0d674;
-    font-family: 'IBM Plex Mono', monospace;
+/* Additional CSS for body and parent container */
+body, html {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
 }
 
-/* Header */
+body {
+    font-family: 'IBM Plex Mono', monospace;
+    background-color: #282828;
+    color: #d1d1d1;
+    line-height: 1.6;
+}
+
+p {
+    font-family: 'IBM Plex Mono', monospace;
+    color: #c0d674;
+    
+}
+
+/* ========== Utility Classes ========== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.container h1 {
+    color: #e6a42b;
+}
+
+.container h2 {
+    color: #e6a42b;
+}
+
+/* ========== Header ========== */
 .header {
-    background-color: #181818;
+    background-color: #333;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    border-bottom: 1px solid #333;
 }
 
-.logo {
+.logo-container img {
+    max-height: 50px;
+}
+
+.navbar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 1rem;
 }
 
-.logo img {
-    width: 40px;
-    height: 40px;
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
 }
 
-.logo h1 {
-    font-size: 1.5rem;
-    color: #ffffff;
+.nav-links a {
+    color: #d1d1d1;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.hamburger {
+.nav-links a:hover {
+    background-color: #e6a42b;
+    color: #000;
+    border-radius: 4px;
+}
+
+.menu-button {
     display: none;
-    flex-direction: column;
-    gap: 5px;
     background: none;
     border: none;
+    font-size: 2rem;
+    color: #d1d1d1;
     cursor: pointer;
 }
 
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background-color: #c0d674;
-    border-radius: 2px;
-}
-
-/* Navigation */
-.nav {
-    display: flex;
-}
-
-.menu {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-.menu a {
-    color: #c0d674;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.menu a:hover {
-    color: #ff6f61; /* Accent color */
-}
-
-/* Submenu */
-.submenu > ul {
-    display: none;
-    position: absolute;
-    background-color: #181818;
-    list-style: none;
-    padding: 10px 0;
-    border: 1px solid #333;
-    z-index: 1;
-}
-
-.submenu:hover > ul {
-    display: block;
-}
-
-.submenu ul li {
-    padding: 10px 20px;
-}
-
-.submenu ul li a {
-    color: #c0d674;
-}
-
-/* Main Sections */
-.section {
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.section h2 {
-    font-size: 2rem;
-    color: #ffffff;
-}
-
-.section p {
-    color: #c0d674;
-    line-height: 1.8;
-}
-
-/* Footer */
-.footer {
-    background-color: #181818;
-    text-align: center;
-    padding: 20px 0;
-    border-top: 1px solid #333;
-    color: #c0d674;
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
-    .hamburger {
-        display: flex;
+    .menu-button {
+        display: block;
     }
-    .nav {
+
+    .nav-links {
         display: none;
         flex-direction: column;
-        width: 100%;
+        align-items: center;
     }
-    .nav.active {
+
+    .nav-links.open {
         display: flex;
     }
-    .menu {
-        flex-direction: column;
-        gap: 10px;
+}
+
+/* ========== Hero Section ========== */
+.hero {
+    position: relative;
+    background: url('images/hero.jpg') center/cover no-repeat;
+    height: 80vh; /* Keeps the height fixed to 80% of the viewport height */
+    display: flex;
+    justify-content: center; /* Horizontally center content */
+    align-items: center; /* Vertically center content */
+    color: #fff;
+    text-align: center;
+}
+
+.hero h4 {
+    color: #c0d674;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1; /* Ensures content is above the overlay */
+    text-align: center; /* Center-aligns text content */
+    max-width: 800px; /* Limits width for readability */
+    margin: 0 auto; /* Ensures horizontal centering */
+}
+
+/* Heading and paragraph styles */
+.hero-content h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    color: #c0d674;
+    font-size: 8.5rem;
+},
+.hero-content h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 4.5rem;
+    color: #c0d674;
+    margin-bottom: 1rem;
+},
+.hero-content h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 2.5rem;
+    color: #c0d674;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1rem; /* Increased for better readability */
+    margin-bottom: 1.5rem;
+}
+
+/* Button styles */
+.hero-content .btn {
+    background-color: #e6a42b;
+    color: #000;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.hero-content .btn:hover {
+    background-color: #c0d674;
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .hero-content h1,
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    .hero-content .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* ========== Intro Section ========== */
+.intro {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.intro h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #c79c6e;
+}
+
+.intro p {
+    font-size: 1.1rem;
+}
+
+/* ========== Features Section ========== */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem 0;
+    justify-content: center; /* Ensures content is centered */
+    align-items: center; /* Centers items vertically */
+    text-align: center;
+}
+
+.feature {
+    background-color: #333;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+    /* Default for wider screens: multiple tiles across */
+    flex: 1 1 calc(33.333% - 2rem);
+    max-width: calc(33.333% - 2rem);
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .feature {
+        /* Single-column layout for smaller devices */
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+.feature h3 {
+    font-size: 1.5rem;
+    color: #e6a42b;
+    margin-bottom: 1rem;
+}
+
+.feature p {
+    font-size: 1rem;
+}
+
+/* Call-to-Action (CTA) Section */
+.container.cta, /* If you meant `.container` also has a `cta` class */
+.container .cta { /* If `.cta` is a child of `.container` */
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center; /* Center text */
+    background-color: #444; /* Background color for contrast */
+    padding: 2rem; /* Adequate spacing inside */
+    margin: 0 auto; /* Center horizontally */
+    width: 100%; /* Full width */
+    min-height: 100vh; /* Occupy full viewport height */
+    box-sizing: border-box; /* Include padding in dimensions */
+}
+
+/* Styling for heading */
+.cta h2 {
+    font-size: 2rem;
+    color: #e6a42b;
+    margin-bottom: 1rem;
+}
+
+/* Styling for paragraph */
+.cta p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Styling for button */
+.cta .btn {
+    background-color: #e6a42b;
+    color: #000;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.cta .btn:hover {
+    background-color: #c0d674;
+    color: #000;
+}
+
+/* ========== Footer ========== */
+.footer {
+    background-color: #333;
+    color: #d1d1d1;
+    padding: 2rem 0;
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between; /* Space columns evenly */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    text-align: left; /* Left-align content in columns */
+    gap: 1.5rem;
+}
+
+.footer-column {
+    flex: 1 1 30%; /* Allow flexible resizing for columns */
+    max-width: 30%;
+    padding: 0 1rem; /* Add padding inside columns */
+}
+
+.footer-column h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #c79c6e;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-column ul li a {
+    color: #c0d674;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #e6a42b;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #c0d674;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer .container {
+        flex-direction: column; /* Stack columns vertically */
+        align-items: center; /* Center-align for smaller screens */
+    }
+
+    .footer-column {
+        max-width: 100%;
+        padding: 1rem 0; /* Add spacing between stacked columns */
     }
 }
