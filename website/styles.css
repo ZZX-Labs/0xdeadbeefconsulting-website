@@ -1,1 +1,53 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+/* Styling the body */
+body {
+    background-color: #121212; /* Black with a hint of gray */
+    color: #c0d674; /* Main text color */
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main container */
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Logo */
+.logo h1 {
+    font-size: 2rem;
+    color: #ffffff; /* Pure white for logo */
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+/* Main content */
+.main-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #c0d674; /* Accent green */
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+}
+
+.contact a {
+    color: #c0d674;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact a:hover {
+    color: #ff6f61; /* Soft red as an accent */
+}
