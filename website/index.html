@@ -14,37 +14,87 @@
                 <img src="images/logo.png" alt="[0xdeadbeef] Consulting Logo">
                 <h1>[0xdeadbeef] Consulting</h1>
             </div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li class="submenu">
-                        <a href="services.html">Services</a>
-                        <ul>
-                            <li><a href="software.html">Software Development</a></li>
-                            <li><a href="firmware.html">Firmware Development</a></li>
-                            <li><a href="hardware.html">Hardware Development</a></li>
-                            <li><a href="web.html">Web Development</a></li>
-                            <li><a href="bitcoin.html">Bitcoin Software Technology Development</a></li>
-                            <li><a href="bitcoin-mining.html">Bitcoin Mining Technology Development</a></li>
-                            <li><a href="ai.html">AI Development</a></li>
-                            <li><a href="ml.html">ML Development</a></li>
-                            <li><a href="cybersecurity.html">Cybersecurity</a></li>
-                            <li><a href="cyberwarfare.html">Cyber Warfare Operations</a></li>
-                            <li><a href="creative.html">Creative Solutions</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li class="submenu">
-                        <a href="resources.html">Resources</a>
-                        <ul>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="case-studies.html">Case Studies</a></li>
-                            <li><a href="tools.html">Tools</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
+<nav>
+    <button class="menu-toggle" aria-label="Open Navigation Menu">☰</button>
+    <ul class="nav-links">
+        <li><a href="static/pages/home.html" class="active">Home</a></li>
+        <li><a href="static/pages/about.html">About</a></li>
+        <li class="submenu">
+            <a href="static/pages/services.html" class="dropdown-toggle">Services</a>
+            <ul class="dropdown">
+                <li><a href="static/pages/services/software.html">Software Development</a></li>
+                <li><a href="static/pages/services/firmware.html">Firmware Development</a></li>
+                <li><a href="static/pages/services/hardware.html">Hardware Development</a></li>
+                <li><a href="static/pages/services/web.html">Web Development</a></li>
+                <li><a href="static/pages/services/bitcoin.html">Bitcoin Development</a></li>
+                <li><a href="static/pages/services/aiml.html">AI & ML Development</a></li>
+                <li><a href="static/pages/services/osint.html">OSINT Services & Reporting</a></li>
+                <li><a href="static/pages/services/cysec.html">Cybersecurity Services</a></li>
+                <li><a href="static/pages/services/cywar.html">Cyber Warfare Response Services</a></li>
+            </ul>
+        </li>
+	<li class="submenu">
+	<a href="static/pages/resources.html">Resources</a>
+        	<ul class="dropdown">
+			<li><a href="static/pages/resources/blog.html">Blog</a></li>
+                        <li><a href="static/pages/resources/case-studies.html">Case Studies</a></li>
+                        <li><a href="static/pages/resources/tools.html">Tools</a></li>
+			<li><a href="static/pages/resources/software.html">Our Open Source Software</a></li>
+		</ul>
+	</li>
+        <li class="submenu">
+            <a href="static/pages/projects.html" class="dropdown-toggle">Projects</a>
+            <ul class="dropdown">
+                <li><a href="static/pages/portfolio/0xdeadbeef-web-design.html">[0xdeadbeef].in Portfolio Website Design</a></li>
+                <li><a href="static/pages/portfolio/0xdeadbeefconsulting-web-design.html">[0xdeadbeef]consulting.io Website Design</a></li>
+                <li><a href="static/pages/portfolio/zzx-labs-web-design.html">zzx-labs.io Website Design</a></li>
+                <li><a href="static/pages/portfolio/speciedex-web-design.html">speciedex.org Website Design</a></li>
+                <li><a href="static/pages/projects/speciedex.html">Speciedex Project</a></li>
+                <li><a href="static/pages/projects/ggai.html">GGAI</a></li>
+                <li><a href="static/pages/projects/cgai.html">CGAI</a></li>
+                <li><a href="static/pages/projects/gp.html">GPT PDA (GP)</a></li>
+            </ul>
+        </li>
+        <li class="submenu">
+            <a href="static/pages/portfolio.html" class="dropdown-toggle">Portfolio</a>
+            <ul class="dropdown">
+                <li><a href="static/pages/portfolio/0xdeadbeef-web-design.html">[0xdeadbeef].in Portfolio Website Design</a></li>
+                <li><a href="static/pages/portfolio/0xdeadbeefconsulting-web-design.html">[0xdeadbeef]consulting.io Website Design</a></li>
+                <li><a href="static/pages/portfolio/zzx-labs-web-design.html">zzx-labs.io Website Design</a></li>
+                <li><a href="static/pages/portfolio/speciedex-web-design.html">speciedex.org Website Design</a></li>
+                <li><a href="static/pages/portfolio/speciedex.html">Speciedex Project</a></li>
+                <li><a href="static/pages/portfolio/ggai.html">GGAI</a></li>
+                <li><a href="static/pages/portfolio/cgai.html">CGAI</a></li>
+                <li><a href="static/pages/portfolio/gp.html">GPT PDA (GP)</a></li>
+            </ul>
+        </li>
+        <li class="submenu">
+            <a href="static/pages/docs.html" class="dropdown-toggle">Docs</a>
+            <ul class="dropdown">
+                <li><a href="static/pages/docs/README.md.html">README.md</a></li>
+                <li><a href="static/pages/docs/LICENSE.md.html">LICENSE.md</a></li>
+                <li><a href="static/pages/docs/manual.html">Manual</a></li>
+                <li><a href="static/pages/docs/manpage.html">manpage</a></li>
+                <li><a href="static/pages/docs/papers.html">Papers</a></li>
+                <li><a href="static/pages/docs/reports.html">Reports</a></li>
+                <li><a href="static/pages/docs/disclosures.html">Disclosures</a></li>
+            </ul>
+        </li>
+        <li class="submenu">
+            <a href="static/pages/legal.html" class="dropdown-toggle">Legal</a>
+            <ul class="dropdown">
+                <li><a href="static/pages/legal/legal-waiver.html">Legal Waiver</a></li>
+                <li><a href="static/pages/legal/legal-disclaimer.html">Legal Disclaimer</a></li>
+                <li><a href="static/pages/legal/legal-notice.html">Legal Notice</a></li>
+                <li><a href="static/pages/legal/terms-of-service.html">Terms of Service</a></li>
+                <li><a href="static/pages/legal/privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="static/pages/legal/how-we-use-your-data.html">How We Use Your Data</a></li>
+            </ul>
+        </li>
+	<li><a href="static/pages/donate.html">Donate</a></li>
+        <li><a href="static/pages/contact.html">Contact</a></li>
+    </ul>
+</nav>
         </div>
     </header>
     <main>
