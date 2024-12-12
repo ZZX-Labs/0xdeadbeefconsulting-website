@@ -50,6 +50,11 @@ nav {
     list-style: none;
     display: flex;
     gap: 1rem;
+    flex-direction: column; /* Adjust for collapsible behavior */
+}
+
+.nav-links.open {
+    display: flex;
 }
 
 .nav-links a {
@@ -63,6 +68,21 @@ nav {
     background-color: #e6a42b;
     color: #000;
     border-radius: 4px;
+}
+
+.submenu .dropdown {
+    display: none; /* Hide by default */
+    flex-direction: column;
+    padding-left: 1rem;
+}
+
+.submenu .dropdown a {
+    padding: 0.25rem 0.5rem;
+    color: #e6a42b;
+}
+
+.submenu.open .dropdown {
+    display: flex; /* Show on submenu click */
 }
 
 .li {
@@ -82,7 +102,7 @@ nav {
 }
 
 .menu-toggle {
-    display: none;
+    display: block;
     background: none;
     color: #e0e0e0;
     font-size: 1.5rem;
