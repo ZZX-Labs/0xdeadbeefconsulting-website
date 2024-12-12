@@ -26,6 +26,10 @@ h2 {
     padding: 1rem 0;
 }
 
+.header h1 {
+    color: #c0d674;
+}
+
 .logo {
     display: flex;
     align-items: center;
