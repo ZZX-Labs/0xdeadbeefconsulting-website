@@ -12,11 +12,11 @@ body {
     line-height: 1.5;
 }
 
-h1 {
+.h1 {
     color: #e6a42b;
 }
 
-h2 {
+.h2 {
     color: #c0d674;
 }
 
@@ -68,6 +68,17 @@ nav {
 .li {
     text-decoration: none;
     style: none;
+    text-align: left;
+    color: #e6a42b;
+    font-size: 0.75rem;
+}
+
+.ul {
+    text-decoration: none;
+    style: none;
+    color: #c0d674;
+    font-size: 0.7rem;
+    text-align: left;
 }
 
 .menu-toggle {
