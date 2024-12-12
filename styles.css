@@ -157,7 +157,18 @@ nav {
 
 .feature h3 {
     color: #e6a42b;
+    font-size: 1.25rem;
     margin-bottom: 0.5rem;
+}
+
+.feature h4 {
+    color: #c0d674;
+    font-size: 1.2rem;
+}
+
+.feature p {
+    color: #c0d674;
+    font-size: 1rem;
 }
 
 /* Footer */
