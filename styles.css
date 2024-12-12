@@ -41,7 +41,7 @@ nav {
 }
 
 .nav-links a {
-    color: #e0e0e0;
+    color: #c0d674;
     text-decoration: none;
     padding: 0.5rem 1rem;
     transition: background 0.3s;
@@ -51,6 +51,11 @@ nav {
     background-color: #e6a42b;
     color: #000;
     border-radius: 4px;
+}
+
+.li {
+    text-decoration: none;
+    style: none;
 }
 
 .menu-toggle {
@@ -109,6 +114,7 @@ nav {
 
 .btn:hover {
     background-color: #c0d674;
+    color: #000;
 }
 
 /* Features Section */
@@ -136,4 +142,6 @@ nav {
     background-color: #1a1a1a;
     text-align: center;
     padding: 1rem 0;
+    font-size: 1rem;
+    color: #c0d674;
 }
