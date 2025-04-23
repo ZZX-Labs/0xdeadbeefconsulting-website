@@ -10,49 +10,201 @@
 <body>
     <header class="header">
         <div class="container">
-            <div class="logo">
-                <img src="../static/images/logo.png" alt="[0xdeadbeef] Consulting Logo">
+            <div class="header-image">
+                <img src="../static/images/header-image.png" alt="[0xdeadbeef] Consulting">
                 <h1>[0xdeadbeef] Consulting</h1>
+                <div class="logo">
+                    <img src="../static/images/logo.png" alt="[0xdeadbeef] Consulting">
+                </div>
             </div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="../about">About</a></li>
-                    <li class="submenu">
-                        <a href="../services" class="active">Services</a>
-                        <ul>
-                            <li><a href="../services/software">Software Development</a></li>
-                            <li><a href="../services/cybersecurity">Cybersecurity</a></li>
-                            <li><a href="../service/cloud">Cloud Solutions</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="../projects">Projects</a></li>
-                    <li class="submenu">
-                        <a href="../resources">Resources</a>
-                        <ul>
-                            <li><a href="../blog">Blog</a></li>
-                            <li><a href="../case-studies">Case Studies</a></li>
-                            <li><a href="../tools">Tools</a></li>
-                        </ul>
-                    </li>
-                </ul>
+	    	<nav>
+    			<button class="menu-toggle" aria-label="Open Navigation Menu">☰</button>
+    			<ul class="nav-links">
+        			<li><a href="../home">Home</a></li>
+        			<li><a href="../about" class="active">About</a></li>
+        			<li class="submenu">
+            				<a href="../services" class="dropdown-toggle">Services</a>
+            				<ul class="dropdown">
+                				<li><a href="../services/software">Software Development</a></li>
+                				<li><a href="../services/firmware">Firmware Development</a></li>
+                				<li><a href="../services/hardware">Hardware Development</a></li>
+                				<li><a href="../services/web">Web Development</a></li>
+                				<li><a href="../services/bitcoin">Bitcoin Development</a></li>
+                				<li><a href="../services/ai">AI Development</a></li>
+						<li><a href="../services/ml">ML Development</a></li>
+                				<li><a href="../services/osint">OSINT Services & Reporting</a></li>
+                				<li><a href="../services/cysec">Cybersecurity Services</a></li>
+                				<li><a href="../services/cywar">Cyber Warfare Response Services</a></li>
+            				</ul>
+        			</li>
+				<li class="submenu">
+					<a href="../resources">Resources</a>
+        				<ul class="dropdown">
+						<li><a href="../resources/blog">Blog</a></li>
+                        			<li><a href="../resources/case-studies">Case Studies</a></li>
+                        			<li><a href="../resources/tools">Tools</a></li>
+						<li><a href="../resources/software">Our Open Source Software</a></li>
+					</ul>
+				</li>
+        			<li class="submenu">
+            				<a href="../projects" class="dropdown-toggle">Projects</a>
+            				<ul class="dropdown">
+                				<li><a href="../projects/0xdeadbeef-web-design">0xdeadbeef.in Portfolio Website Design</a></li>
+                				<li><a href="../projects/0xdeadbeefconsulting-web-design">0xdeadbeefconsulting.io Website Design</a></li>
+                				<li><a href="../projects/zzx-labs-web-design">zzx-labs.io Website Design</a></li>
+                                		<li><a href="../projects/bit-tech-web-design">bit-tech.in Website Design</a></li>
+                                		<li><a href="../projects/bit-tick-web-design">bit-tick.in Website Design</a></li>
+                				<li><a href="../projects/speciedex-web-design">speciedex.org Website Design</a></li>
+                				<li><a href="../projects/speciedex">Speciedex Project</a></li>
+                				<li><a href="../projects/ggai">GGAI</a></li>
+                				<li><a href="../projects/cgai">CGAI</a></li>
+                				<li><a href="../projects/gp">GPT PDA (GP)</a></li>
+            				</ul>
+        			</li>
+        			<li class="submenu">
+            				<a href="../portfolio" class="dropdown-toggle">Portfolio</a>
+            				<ul class="dropdown">
+                				<li><a href="../portfolio/0xdeadbeef-web-design">0xdeadbeef.in Portfolio Website Design</a></li>
+                				<li><a href="../portfolio/0xdeadbeefconsulting-web-design">0xdeadbeefconsulting.io Website Design</a></li>
+                				<li><a href="../portfolio/zzx-labs-web-design">zzx-labs.io Website Design</a></li>
+                                		<li><a href="../portfolio/bit-tech-web-design">bit-tech.in Website Design</a></li>
+		                                <li><a href="../portfolio/bit-tick-web-design">bit-tick.in Website Design</a></li>
+                				<li><a href="../portfolio/speciedex-web-design">speciedex.org Website Design</a></li>
+                				<li><a href="../portfolio/speciedex">Speciedex Project</a></li>
+                				<li><a href="../portfolio/ggai">GGAI</a></li>
+                				<li><a href="../portfolio/cgai">CGAI</a></li>
+                				<li><a href="../portfolio/gp">GPT PDA (GP)</a></li>
+            				</ul>
+        			</li>
+        			<li class="submenu">
+            				<a href="../docs" class="dropdown-toggle">Docs</a>
+            				<ul class="dropdown">
+                				<li><a href="../docs/README.md">README.md</a></li>
+                				<li><a href="../docs/LICENSE.md">LICENSE.md</a></li>
+                				<li><a href="../docs/manual">Manual</a></li>
+                				<li><a href="../docs/manpage">manpage</a></li>
+                				<li><a href="../docs/papers">Papers</a></li>
+                				<li><a href="../docs/reports">Reports</a></li>
+                				<li><a href="../docs/disclosures">Disclosures</a></li>
+            				</ul>
+        			</li>
+        			<li class="submenu">
+            				<a href="../legal" class="dropdown-toggle">Legal</a>
+            				<ul class="dropdown">
+                				<li><a href="../legal/legal-waiver">Legal Waiver</a></li>
+                				<li><a href="../legal/legal-disclaimer">Legal Disclaimer</a></li>
+                				<li><a href="../legal/legal-notice">Legal Notice</a></li>
+                				<li><a href="../legal/terms-of-service">Terms of Service</a></li>
+                				<li><a href="../legal/privacy-policy">Privacy Policy</a></li>
+                				<li><a href="../legal/how-we-use-your-data">How We Use Your Data</a></li>
+            				</ul>
+        			</li>
+				<li><a href="../donate">Donate</a></li>
+        			<li><a href="../contact">Contact</a></li>
+    			</ul>
             </nav>
         </div>
     </header>
+
     <main>
-        <div class="container">
-            <h2>Our Services</h2>
-            <p>Explore our wide range of services:</p>
-            <ul>
-                <li><a href="../software">Software Development</a></li>
-                <li><a href="../cybersecurity">Cybersecurity</a></li>
-                <li><a href="../cloud">Cloud Solutions</a></li>
-            </ul>
-        </div>
+        <section class="hero" style="color: #c0d674; text-align: center; margin: 0 auto;">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Our Services</h1>
+                <p>Technical excellence, operational precision, and cryptographic trust at every layer.</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+
+                <div class="feature">
+                    <h3>Tech Consulting</h3>
+                    <p>Strategic advisory for startups, research labs, and defense-focused enterprises. Specializing in Bitcoin infrastructure, AI autonomy, cybersecurity, and open-source stack optimization.</p>
+                    <a href="../services/consulting.html" class="btn">Explore Consulting</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>Custom Software Development</h3>
+                    <p>Python-first, API-centric, security-conscious applications—ranging from command-line tools to full-stack systems. Agile, modular, and auditable from the ground up.</p>
+                    <a href="../services/software.html" class="btn">View Software Services</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>Firmware & Embedded Systems</h3>
+                    <p>Low-level C/C++ and assembly-based development for microcontrollers, embedded Linux devices, and secure hardware with cryptographic and Bitcoin-enabled logic.</p>
+                    <a href="../services/firmware.html" class="btn">Firmware Projects</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>Hardware & Device Design</h3>
+                    <p>Prototyping secure computing devices, Bitcoin hardware wallets, decentralized infrastructure, and autonomous machines with custom-built enclosures and boards.</p>
+                    <a href="../services/hardware.html" class="btn">Hardware Offerings</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>Web Development</h3>
+                    <p>Static and dynamic websites, self-hosted apps, and decentralized backend architecture using Flask, nginx, and Tor. Includes admin panels, upload portals, and analytics.</p>
+                    <a href="../services/web.html" class="btn">Web Capabilities</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>Bitcoin Development</h3>
+                    <p>From full node architecture and Lightning Network tooling to Bitcoin smart contracts, custody systems, forensic tracking, and miner optimization consulting.</p>
+                    <a href="../services/bitcoin.html" class="btn">Bitcoin Services</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>AI & Machine Learning</h3>
+                    <p>Training and deploying LLMs, building custom GPT-based assistants, STT/TTS systems, and image/audio generators. We support offline/local model usage by default.</p>
+                    <a href="../services/ai.html" class="btn">AI Services</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>OSINT & Cybersecurity</h3>
+                    <p>We offer intelligence gathering, forensics, reporting, offensive research tooling, and military-grade cyber defense response planning for resilient operations.</p>
+                    <a href="../services/osint.html" class="btn">OSINT Tools</a>
+                    <a href="../services/cysec.html" class="btn">Cybersecurity</a>
+                    <a href="../services/cywar.html" class="btn">Cyberwarfare</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>Private Contracting & Embedded Support</h3>
+                    <p>White-glove contracting, on-call systems development, field deployment planning, and highly specialized project embedding for long-term strategic engagements.</p>
+                    <a href="../services/contracting.html" class="btn">Engage Contracting</a>
+                </div>
+                <br><br>
+
+                <div class="feature">
+                    <h3>R&D + Technical Research</h3>
+                    <p>Join collaborative development or sponsor private research into offensive tooling, advanced cryptography, Bitcoin miner coordination, or decentralized AI stacks.</p>
+                    <a href="../services/research.html" class="btn">Research Engagement</a>
+                </div>
+                <br><br>
+
+            </div>
+        </section>
+
+        <section class="contact" style="text-align: center; margin: 0 auto;">
+            <div class="container">
+                <h2 style="color: #c0d674;">Inquire for Rates, Availability & NDA</h2>
+                <p style="color: #c0d674;">Send all service inquiries to <i>0xdeadbeeftechconsulting@protonmail.com</i></p>
+            </div>
+        </section>
+        <br><br>
     </main>
+
     <footer class="footer">
         <div class="container">
-            <p>Contact us: <i>0xdeadbeeftechconsulting@protonmail.com</i></p>
-            <p>&copy; 2025 [0xdeadbeef] Consulting. All rights reserved.</p>
+            <p>&copy; 2025 <strong>[0xdeadbeef] Consulting</strong>. All rights reserved. Licensed under the MIT Open Source Software License. Created by <i>[0xdeadbeef]</i> of <strong>ZZX-Labs R&D</strong> & <strong>[0xdeadbeef] Consulting</strong>.</p>
         </div>
     </footer>
 </body>
