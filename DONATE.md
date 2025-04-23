@@ -1,6 +1,6 @@
 # Donate to this Project
 
-<img src="website/static/images/bitcoin.png" style="width:120px;">
+<img src="static/images/bitcoin.png" style="width:120px;">
 
 *[0xdeadbeef] Consulting* is a bitcoin funded project. <br>
 You may donate to the project at this address: <br>
@@ -8,6 +8,6 @@ You may donate to the project at this address: <br>
 
 ---
 
-<img src="website/static/images/address-qr.png" style="width:240px;">
+<img src="static/images/address-qr.png" style="width:240px;">
 
 ---
