@@ -15,11 +15,13 @@
     <script src="/static/js/script.js" defer></script>
 </head>
 <body>
+    <header>
+        <div data-include="/_partials/header.html"></div>
+    </header>
+    
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <main id="main-content">
-        <div data-include="/_partials/header.html"></div>
-
         <section class="hero" aria-labelledby="portfolio-title">
             <div class="hero-overlay"></div>
             <div class="container">
@@ -218,8 +220,6 @@
                 </div>
             </div>
         </section>
-
-        <div data-include="/_partials/footer.html"></div>
     </main>
 
     <script type="module">
@@ -995,4 +995,7 @@
         loadPortfolio();
     </script>
 </body>
+<footer>
+    <div data-include="/_partials/footer.html"></div>
+</footer>
 </html>
