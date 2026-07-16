@@ -18,17 +18,19 @@ document.addEventListener('DOMContentLoaded',async()=>{
 
 async function loadIncludes(root=document){
     while(true){
-        const elements=[...root.querySelectorAll('[data-include]')];
+        const elements=[...root.querySelectorAll('[include-data]')];
 
         if(!elements.length) break;
 
         await Promise.all(elements.map(async element=>{
-            const name=element.dataset.include;
-            const includeURL=INCLUDES[name]||name;
+            const name=element.getAttribute('include-data');
+            const includeURL=INCLUDES[name];
 
-            element.removeAttribute('data-include');
+            element.removeAttribute('include-data');
 
-            if(!includeURL){
+            if(!name||!includeURL){
+                console.error(`Unknown include component: ${name||'(empty)'}`);
+                element.setAttribute('include-error',name||'unknown');
                 return;
             }
 
@@ -49,18 +51,10 @@ async function loadIncludes(root=document){
                 }
 
                 element.innerHTML=await response.text();
-                element.dataset.includeLoaded=name;
+                element.setAttribute('include-loaded',name);
             }catch(error){
                 console.error(`Unable to load include "${name}":`,error);
-
-                element.innerHTML=`
-                    <div class="notice notice-danger">
-                        Unable to load site component:
-                        <code>${escapeHTML(name)}</code>
-                    </div>
-                `;
-
-                element.dataset.includeError=name;
+                element.setAttribute('include-error',name);
             }
         }));
     }
@@ -333,13 +327,4 @@ function normalizePath(path){
     }
 
     return normalized;
-}
-
-function escapeHTML(value){
-    return String(value)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'",'&#039;');
 }
