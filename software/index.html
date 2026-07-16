@@ -14,10 +14,9 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="/static/js/script.js" defer></script>
 </head>
-<header>
-    <div data-include="/_partials/header.html"></div>
-</header>
 <body>
+    <div data-include="header"></div>
+    
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <main id="main-content">
@@ -208,10 +207,9 @@
             </div>
         </section>
     </main>
+
+    <div data-include="footer"></div>
 </body>
-<footer>
-    <div data-include="/_partials/footer.html"></div>
-</footer>
 
 <script type="module">
         const ROOT_MANIFEST="https://zzx-labs.io/projects/manifest.json";
