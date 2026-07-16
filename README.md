@@ -54,7 +54,7 @@ All code is fully open source and MIT-licensed.
 
 ---
 
-Key Projects & Infrastructure
+## Key Projects & Infrastructure
 
 RedPanda: Cryptolinguistic source code obfuscator to prevent Chinese regime-aligned dev environments from executing sensitive code.
 
@@ -73,7 +73,7 @@ VLC_BOX: Raspberry Pi-powered media device for secure, offline content playback.
 
 ---
 
-Consulting & Capabilities
+## Consulting & Capabilities
 
 We offer elite-level services in:
 
@@ -99,7 +99,7 @@ All engagements are prepaid in Bitcoin, signed under NDA, and delivered with zer
 
 ---
 
-Licensing
+## Licensing
 
 This project and all code in this repository is released under the MIT License.
 
@@ -108,7 +108,7 @@ This project and all code in this repository is released under the MIT License.
 
 ---
 
-Contact
+## Contact
 
 General Inquiries: 0xdeadbeeftechconsulting@protonmail.com
 
@@ -119,7 +119,7 @@ Secure Contact: Use PGP/GPG where appropriate.
 
 ---
 
-Donations
+## Donations
 
 Support this open-source infrastructure via Bitcoin only:
 
@@ -131,7 +131,7 @@ QR Codes and full details available at: /donate
 
 ---
 
-Mirror Availability
+## Mirror Availability
 
 .onion mirror for Tor users
 
@@ -142,13 +142,16 @@ All pages are lightweight, static, and self-hostable
 
 ---
 
-Credits
+## Credits
 
 Created, maintained, and operated by:
 
 [0xdeadbeef]
+
 Founder, ZZX-Labs R&D
+
 Lead Architect, [0xdeadbeef] Consulting
+
 Bitcoin-maximalist | FOSS advocate | Cypherpunk builder
 
 
