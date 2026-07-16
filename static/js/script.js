@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
 
 async function loadIncludes(root=document){
     while(true){
-        const elements=[...root.querySelectorAll('[include-data]')];
+        const elements=[...root.querySelectorAll('[data-include]')];
 
         if(!elements.length) return;
 
@@ -30,14 +30,14 @@ async function loadIncludes(root=document){
 }
 
 async function loadInclude(element){
-    const name=element.getAttribute('include-data');
+    const name=element.getAttribute('data-include');
     const includeURL=INCLUDES[name];
 
     /*
      * Remove the loading attribute before fetching. This prevents a failed
      * component from being processed repeatedly by loadIncludes().
      */
-    element.removeAttribute('include-data');
+    element.removeAttribute('data-include');
 
     if(!name||!includeURL){
         console.error(`Unknown include component: ${name||'(empty)'}`);
