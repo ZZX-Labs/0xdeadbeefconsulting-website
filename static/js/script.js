@@ -1,5 +1,8 @@
 'use strict';
 
+const SCRIPT_URL=document.currentScript?.src||new URL('/static/js/script.js',window.location.href).href;
+const SITE_ROOT=new URL('../../',SCRIPT_URL);
+
 document.addEventListener('DOMContentLoaded',async()=>{
     await loadIncludes();
     initializeNavigation();
@@ -11,24 +14,26 @@ document.addEventListener('DOMContentLoaded',async()=>{
 });
 
 async function loadIncludes(root=document){
-    const loaded=new Set();
-
     while(true){
-        const includes=[...root.querySelectorAll('[data-include]')].filter(element=>{
-            const url=element.dataset.include;
-            return url&&!loaded.has(element);
-        });
+        const includes=[...root.querySelectorAll('[data-include]')];
 
         if(!includes.length) break;
 
         await Promise.all(includes.map(async element=>{
-            const url=element.dataset.include;
+            const includePath=element.dataset.include;
 
-            loaded.add(element);
+            if(!includePath){
+                element.removeAttribute('data-include');
+                return;
+            }
+
+            const normalizedPath=includePath.replace(/^\/+/,'');
+            const includeURL=new URL(normalizedPath,SITE_ROOT);
 
             try{
-                const response=await fetch(url,{
-                    cache:'no-cache',
+                const response=await fetch(includeURL.href,{
+                    method:'GET',
+                    cache:'no-store',
                     credentials:'same-origin',
                     headers:{
                         Accept:'text/html'
@@ -36,24 +41,28 @@ async function loadIncludes(root=document){
                 });
 
                 if(!response.ok){
-                    throw new Error(`${response.status} ${response.statusText}`);
+                    throw new Error(
+                        `${response.status} ${response.statusText}: ${includeURL.href}`
+                    );
                 }
 
-                element.innerHTML=await response.text();
+                const html=await response.text();
+
+                element.innerHTML=html;
                 element.removeAttribute('data-include');
-                element.setAttribute('data-include-loaded',url);
+                element.dataset.includeLoaded=includeURL.href;
             }catch(error){
-                console.error(`Failed to load partial: ${url}`,error);
+                console.error('Partial include failed:',error);
 
                 element.innerHTML=`
                     <div class="notice notice-danger">
                         Unable to load site component:
-                        <code>${escapeHTML(url)}</code>
+                        <code>${escapeHTML(includeURL.href)}</code>
                     </div>
                 `;
 
                 element.removeAttribute('data-include');
-                element.setAttribute('data-include-error',url);
+                element.dataset.includeError=includeURL.href;
             }
         }));
     }
@@ -82,9 +91,7 @@ function initializeNavigation(){
 
             if(!parent) return;
 
-            const mobile=window.matchMedia('(max-width:900px)').matches;
-
-            if(mobile){
+            if(window.matchMedia('(max-width:900px)').matches){
                 event.preventDefault();
             }
 
@@ -109,14 +116,18 @@ function initializeNavigation(){
     document.addEventListener('click',event=>{
         if(!menuToggle||!navLinks) return;
 
-        const clickedInsideNav=navLinks.contains(event.target);
-        const clickedToggle=menuToggle.contains(event.target);
+        const insideNavigation=navLinks.contains(event.target);
+        const insideToggle=menuToggle.contains(event.target);
 
-        if(navLinks.classList.contains('open')&&!clickedInsideNav&&!clickedToggle){
+        if(
+            navLinks.classList.contains('open')&&
+            !insideNavigation&&
+            !insideToggle
+        ){
             closeNavigation(menuToggle,navLinks);
         }
 
-        if(!clickedInsideNav){
+        if(!insideNavigation){
             closeDropdowns();
         }
     });
@@ -126,10 +137,7 @@ function initializeNavigation(){
 
         closeNavigation(menuToggle,navLinks);
         closeDropdowns();
-
-        if(menuToggle){
-            menuToggle.focus();
-        }
+        menuToggle?.focus();
     });
 
     window.addEventListener('resize',()=>{
@@ -164,26 +172,27 @@ function initializeActiveLinks(){
     document.querySelectorAll('.nav-links a[href]').forEach(link=>{
         const href=link.getAttribute('href');
 
-        if(!href||
-           href.startsWith('#')||
-           href.startsWith('mailto:')||
-           href.startsWith('tel:')||
-           href.startsWith('javascript:')){
+        if(
+            !href||
+            href.startsWith('#')||
+            href.startsWith('mailto:')||
+            href.startsWith('tel:')||
+            href.startsWith('javascript:')
+        ){
             return;
         }
 
-        let linkPath;
+        let url;
 
         try{
-            const url=new URL(href,window.location.origin);
-
-            if(url.origin!==window.location.origin) return;
-
-            linkPath=normalizePath(url.pathname);
+            url=new URL(href,SITE_ROOT);
         }catch{
             return;
         }
 
+        if(url.origin!==window.location.origin) return;
+
+        const linkPath=normalizePath(url.pathname);
         const exactMatch=linkPath===currentPath;
         const sectionMatch=
             linkPath!=='/'&&
@@ -192,16 +201,17 @@ function initializeActiveLinks(){
         if(!exactMatch&&!sectionMatch) return;
 
         link.classList.add('active');
-        link.setAttribute('aria-current',exactMatch?'page':'true');
 
-        const parentDropdown=link.closest('.submenu');
+        if(exactMatch){
+            link.setAttribute('aria-current','page');
+        }
 
-        if(parentDropdown){
-            const parentLink=parentDropdown.querySelector(':scope > a');
+        const submenu=link.closest('.submenu');
 
-            if(parentLink){
-                parentLink.classList.add('active');
-            }
+        if(submenu){
+            submenu
+                .querySelector(':scope > a')
+                ?.classList.add('active');
         }
     });
 }
@@ -244,14 +254,6 @@ function initializeSmoothScroll(){
             target.scrollIntoView({
                 behavior:'smooth',
                 block:'start'
-            });
-
-            if(!target.hasAttribute('tabindex')){
-                target.setAttribute('tabindex','-1');
-            }
-
-            target.focus({
-                preventScroll:true
             });
 
             history.pushState(null,'',href);
