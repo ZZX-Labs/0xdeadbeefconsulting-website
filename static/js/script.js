@@ -1,15 +1,19 @@
 'use strict';
 
-const INCLUDES={
+const INCLUDES=Object.freeze({
     header:'/_partials/header.html',
     nav:'/_partials/nav.html',
     footer:'/_partials/footer.html'
-};
+});
 
 const MOBILE_NAV_QUERY='(max-width:900px)';
 
 document.addEventListener('DOMContentLoaded',async()=>{
-    await loadIncludes(document);
+    try{
+        await loadIncludes(document);
+    }catch(error){
+        console.error('Site component loading failed:',error);
+    }
 
     initializeNavigation();
     initializeActiveLinks();
@@ -18,8 +22,8 @@ document.addEventListener('DOMContentLoaded',async()=>{
     initializeCopyButtons();
     initializeCurrentYear();
 
-    document.documentElement.classList.add('includes-ready');
-    document.dispatchEvent(new CustomEvent('site:includes-ready'));
+    document.documentElement.classList.add('site-ready');
+    document.dispatchEvent(new CustomEvent('site:ready'));
 });
 
 async function loadIncludes(root=document){
@@ -39,49 +43,41 @@ async function loadInclude(element){
     element.removeAttribute('data-include');
 
     if(!name||!includeURL){
-        console.error(`Unknown include component: ${name||'(empty)'}`);
         element.setAttribute('data-include-error',name||'unknown');
+        console.error(`Unknown include component: ${name||'(empty)'}`);
         return;
     }
 
     try{
         const response=await fetch(includeURL,{
             method:'GET',
-            cache:'no-store',
+            cache:'no-cache',
             credentials:'same-origin',
             redirect:'follow',
             headers:{
-                Accept:'text/html'
+                Accept:'text/html, text/plain;q=0.9, */*;q=0.1'
             }
         });
 
         if(!response.ok){
             throw new Error(
-                `${response.status} ${response.statusText}: ${includeURL}`
+                `HTTP ${response.status} ${response.statusText} for ${includeURL}`
             );
         }
 
         const html=await response.text();
 
         if(!html.trim()){
-            throw new Error(`Empty include response: ${includeURL}`);
+            throw new Error(`Empty response from ${includeURL}`);
         }
 
         element.innerHTML=html;
         element.setAttribute('data-include-loaded',name);
         element.setAttribute('data-include-source',includeURL);
     }catch(error){
-        console.error(`Unable to load include "${name}":`,error);
-
         element.setAttribute('data-include-error',name);
         element.setAttribute('data-include-source',includeURL);
-
-        element.innerHTML=`
-            <div class="notice notice-danger" role="alert">
-                Unable to load site component:
-                <code>${escapeHTML(name)}</code>
-            </div>
-        `;
+        console.error(`Unable to load include "${name}":`,error);
     }
 }
 
@@ -95,9 +91,11 @@ function initializeNavigation(){
     menuToggle.setAttribute('aria-label','Open navigation menu');
 
     menuToggle.addEventListener('click',()=>{
-        const open=!navLinks.classList.contains('open');
-
-        setNavigationState(menuToggle,navLinks,open);
+        setNavigationState(
+            menuToggle,
+            navLinks,
+            !navLinks.classList.contains('open')
+        );
     });
 
     document.querySelectorAll('.dropdown-toggle').forEach(toggle=>{
@@ -107,7 +105,6 @@ function initializeNavigation(){
             const parent=toggle.closest('.submenu');
 
             if(!parent) return;
-
             if(!window.matchMedia(MOBILE_NAV_QUERY).matches) return;
 
             event.preventDefault();
@@ -123,30 +120,29 @@ function initializeNavigation(){
         const insideNavigation=navLinks.contains(event.target);
         const insideToggle=menuToggle.contains(event.target);
 
-        if(!insideNavigation&&!insideToggle){
-            setNavigationState(menuToggle,navLinks,false);
-            closeDropdowns();
-        }
+        if(insideNavigation||insideToggle) return;
+
+        setNavigationState(menuToggle,navLinks,false);
+        closeDropdowns();
     });
 
     document.addEventListener('keydown',event=>{
         if(event.key!=='Escape') return;
 
-        const navigationWasOpen=navLinks.classList.contains('open');
-        const dropdownWasOpen=Boolean(
-            document.querySelector('.nav-links .submenu.open')
-        );
+        const wasOpen=
+            navLinks.classList.contains('open')||
+            Boolean(document.querySelector('.nav-links .submenu.open'));
 
         setNavigationState(menuToggle,navLinks,false);
         closeDropdowns();
 
-        if(navigationWasOpen||dropdownWasOpen){
+        if(wasOpen){
             menuToggle.focus();
         }
     });
 
     window.addEventListener('resize',()=>{
-        if(window.matchMedia('(min-width:901px)').matches){
+        if(!window.matchMedia(MOBILE_NAV_QUERY).matches){
             setNavigationState(menuToggle,navLinks,false);
             closeDropdowns();
         }
@@ -223,14 +219,9 @@ function initializeActiveLinks(){
         }
 
         const submenu=link.closest('.submenu');
+        const parentLink=submenu?.querySelector(':scope > .dropdown-toggle');
 
-        if(!submenu) return;
-
-        const parentLink=submenu.querySelector(':scope > .dropdown-toggle');
-
-        if(parentLink){
-            parentLink.classList.add('active');
-        }
+        parentLink?.classList.add('active');
     });
 }
 
@@ -274,11 +265,7 @@ function initializeSmoothScroll(){
                 block:'start'
             });
 
-            if(history.pushState){
-                history.pushState(null,'',href);
-            }else{
-                window.location.hash=href;
-            }
+            history.pushState(null,'',href);
         });
     });
 }
@@ -300,11 +287,7 @@ function initializeCopyButtons(){
 
             if(!source) return;
 
-            const value=(
-                source.value||
-                source.textContent||
-                ''
-            ).trim();
+            const value=(source.value||source.textContent||'').trim();
 
             if(!value) return;
 
@@ -322,7 +305,6 @@ function initializeCopyButtons(){
                 },1500);
             }catch(error){
                 console.error('Unable to copy value:',error);
-
                 button.textContent='Copy failed';
 
                 window.setTimeout(()=>{
@@ -346,8 +328,6 @@ async function copyText(value){
     textarea.style.position='fixed';
     textarea.style.left='-9999px';
     textarea.style.top='0';
-    textarea.style.opacity='0';
-    textarea.style.pointerEvents='none';
 
     document.body.append(textarea);
     textarea.focus();
@@ -386,13 +366,4 @@ function normalizePath(path){
     }
 
     return normalized;
-}
-
-function escapeHTML(value){
-    return String(value)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'",'&#039;');
 }
