@@ -9,7 +9,7 @@ const INCLUDES={
 const MOBILE_NAV_QUERY='(max-width:900px)';
 
 document.addEventListener('DOMContentLoaded',async()=>{
-    await loadIncludes();
+    await loadIncludes(document);
 
     initializeNavigation();
     initializeActiveLinks();
@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded',async()=>{
     initializeSmoothScroll();
     initializeCopyButtons();
     initializeCurrentYear();
+
+    document.documentElement.classList.add('includes-ready');
+    document.dispatchEvent(new CustomEvent('site:includes-ready'));
 });
 
 async function loadIncludes(root=document){
@@ -33,15 +36,11 @@ async function loadInclude(element){
     const name=element.getAttribute('data-include');
     const includeURL=INCLUDES[name];
 
-    /*
-     * Remove the loading attribute before fetching. This prevents a failed
-     * component from being processed repeatedly by loadIncludes().
-     */
     element.removeAttribute('data-include');
 
     if(!name||!includeURL){
         console.error(`Unknown include component: ${name||'(empty)'}`);
-        element.setAttribute('include-error',name||'unknown');
+        element.setAttribute('data-include-error',name||'unknown');
         return;
     }
 
@@ -50,6 +49,7 @@ async function loadInclude(element){
             method:'GET',
             cache:'no-store',
             credentials:'same-origin',
+            redirect:'follow',
             headers:{
                 Accept:'text/html'
             }
@@ -61,11 +61,27 @@ async function loadInclude(element){
             );
         }
 
-        element.innerHTML=await response.text();
-        element.setAttribute('include-loaded',name);
+        const html=await response.text();
+
+        if(!html.trim()){
+            throw new Error(`Empty include response: ${includeURL}`);
+        }
+
+        element.innerHTML=html;
+        element.setAttribute('data-include-loaded',name);
+        element.setAttribute('data-include-source',includeURL);
     }catch(error){
         console.error(`Unable to load include "${name}":`,error);
-        element.setAttribute('include-error',name);
+
+        element.setAttribute('data-include-error',name);
+        element.setAttribute('data-include-source',includeURL);
+
+        element.innerHTML=`
+            <div class="notice notice-danger" role="alert">
+                Unable to load site component:
+                <code>${escapeHTML(name)}</code>
+            </div>
+        `;
     }
 }
 
@@ -92,11 +108,6 @@ function initializeNavigation(){
 
             if(!parent) return;
 
-            /*
-             * On desktop, the top-level link remains navigable. CSS may display
-             * the dropdown through hover or focus. On mobile, clicking toggles
-             * the submenu instead of navigating immediately.
-             */
             if(!window.matchMedia(MOBILE_NAV_QUERY).matches) return;
 
             event.preventDefault();
@@ -323,10 +334,7 @@ function initializeCopyButtons(){
 }
 
 async function copyText(value){
-    if(
-        navigator.clipboard&&
-        window.isSecureContext
-    ){
+    if(navigator.clipboard&&window.isSecureContext){
         await navigator.clipboard.writeText(value);
         return;
     }
@@ -336,10 +344,13 @@ async function copyText(value){
     textarea.value=value;
     textarea.setAttribute('readonly','');
     textarea.style.position='fixed';
+    textarea.style.left='-9999px';
+    textarea.style.top='0';
     textarea.style.opacity='0';
     textarea.style.pointerEvents='none';
 
     document.body.append(textarea);
+    textarea.focus();
     textarea.select();
 
     const copied=document.execCommand('copy');
@@ -375,4 +386,13 @@ function normalizePath(path){
     }
 
     return normalized;
+}
+
+function escapeHTML(value){
+    return String(value)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
 }
