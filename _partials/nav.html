@@ -1,67 +1,186 @@
 <nav class="site-nav" aria-label="Primary navigation">
-    <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="primary-navigation" aria-expanded="false">☰</button>
+    <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-controls="primary-navigation"
+        aria-expanded="false"
+    >
+        <span aria-hidden="true">☰</span>
+    </button>
 
     <ul id="primary-navigation" class="nav-links">
-        <li><a href="/home/">Home</a></li>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/consultant/">Consultant</a></li>
+        <li>
+            <a href="/home/">Home</a>
+        </li>
+
+        <li>
+            <a href="/about/">About</a>
+        </li>
+
+        <li>
+            <a href="/consultant/">Consultant</a>
+        </li>
 
         <li class="submenu">
-            <a class="dropdown-toggle" href="/services/" aria-haspopup="true" aria-expanded="false">Services</a>
-            <ul class="dropdown" aria-label="Services">
-                <li><a href="/services/software/">Software Development</a></li>
-                <li><a href="/services/firmware/">Firmware Development</a></li>
-                <li><a href="/services/hardware/">Hardware Development</a></li>
-                <li><a href="/services/web/">Web Development</a></li>
-                <li><a href="/services/bitcoin/">Bitcoin Development</a></li>
-                <li><a href="/services/ai/">AI Development</a></li>
-                <li><a href="/services/ml/">Machine Learning Development</a></li>
-                <li><a href="/services/osint/">OSINT Services &amp; Reporting</a></li>
-                <li><a href="/services/cysec/">Cybersecurity Services</a></li>
-                <li><a href="/services/cywar/">Cyber Warfare Response Services</a></li>
+            <a
+                class="dropdown-toggle"
+                href="/services/"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="services-navigation"
+            >
+                Services
+            </a>
+
+            <ul id="services-navigation" class="dropdown" aria-label="Services">
+                <li>
+                    <a href="/services/software/">Software Development</a>
+                </li>
+                <li>
+                    <a href="/services/firmware/">Firmware Development</a>
+                </li>
+                <li>
+                    <a href="/services/hardware/">Hardware Development</a>
+                </li>
+                <li>
+                    <a href="/services/web/">Web Development</a>
+                </li>
+                <li>
+                    <a href="/services/bitcoin/">Bitcoin Development</a>
+                </li>
+                <li>
+                    <a href="/services/ai/">Artificial Intelligence Development</a>
+                </li>
+                <li>
+                    <a href="/services/ml/">Machine Learning Development</a>
+                </li>
+                <li>
+                    <a href="/services/osint/">OSINT Services &amp; Reporting</a>
+                </li>
+                <li>
+                    <a href="/services/cysec/">Cybersecurity Services</a>
+                </li>
+                <li>
+                    <a href="/services/cywar/">Cyber Warfare Response Services</a>
+                </li>
             </ul>
         </li>
 
         <li class="submenu">
-            <a class="dropdown-toggle" href="/resources/" aria-haspopup="true" aria-expanded="false">Resources</a>
-            <ul class="dropdown" aria-label="Resources">
-                <li><a href="/resources/blog/">Blog</a></li>
-                <li><a href="/resources/case-studies/">Case Studies</a></li>
-                <li><a href="/resources/tools/">Tools</a></li>
-                <li><a href="/software/">Open-Source Software</a></li>
+            <a
+                class="dropdown-toggle"
+                href="/resources/"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="resources-navigation"
+            >
+                Resources
+            </a>
+
+            <ul id="resources-navigation" class="dropdown" aria-label="Resources">
+                <li>
+                    <a href="/resources/blog/">Blog</a>
+                </li>
+                <li>
+                    <a href="/resources/case-studies/">Case Studies</a>
+                </li>
+                <li>
+                    <a href="/resources/tools/">Tools</a>
+                </li>
+                <li>
+                    <a href="/software/">Open-Source Software</a>
+                </li>
             </ul>
         </li>
 
-        <li><a href="/projects/">Projects</a></li>
-        <li><a href="/portfolio/">Portfolio</a></li>
-        <li><a href="/software/">Software</a></li>
+        <li>
+            <a href="/projects/">Projects</a>
+        </li>
+
+        <li>
+            <a href="/portfolio/">Portfolio</a>
+        </li>
+
+        <li>
+            <a href="/software/">Software</a>
+        </li>
 
         <li class="submenu">
-            <a class="dropdown-toggle" href="/docs/" aria-haspopup="true" aria-expanded="false">Docs</a>
-            <ul class="dropdown" aria-label="Documentation">
-                <li><a href="/docs/README.md">README.md</a></li>
-                <li><a href="/docs/LICENSE.md">LICENSE.md</a></li>
-                <li><a href="/docs/manual/">Manual</a></li>
-                <li><a href="/docs/manpage/">Manpage</a></li>
-                <li><a href="/docs/papers/">Papers</a></li>
-                <li><a href="/docs/reports/">Reports</a></li>
-                <li><a href="/docs/disclosures/">Disclosures</a></li>
+            <a
+                class="dropdown-toggle"
+                href="/docs/"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="docs-navigation"
+            >
+                Docs
+            </a>
+
+            <ul id="docs-navigation" class="dropdown" aria-label="Documentation">
+                <li>
+                    <a href="/docs/README.md">README.md</a>
+                </li>
+                <li>
+                    <a href="/docs/LICENSE.md">LICENSE.md</a>
+                </li>
+                <li>
+                    <a href="/docs/manual/">Manual</a>
+                </li>
+                <li>
+                    <a href="/docs/manpage/">Manpage</a>
+                </li>
+                <li>
+                    <a href="/docs/papers/">Papers</a>
+                </li>
+                <li>
+                    <a href="/docs/reports/">Reports</a>
+                </li>
+                <li>
+                    <a href="/docs/disclosures/">Disclosures</a>
+                </li>
             </ul>
         </li>
 
         <li class="submenu">
-            <a class="dropdown-toggle" href="/legal/" aria-haspopup="true" aria-expanded="false">Legal</a>
-            <ul class="dropdown" aria-label="Legal">
-                <li><a href="/legal/legal-waiver/">Legal Waiver</a></li>
-                <li><a href="/legal/legal-disclaimer/">Legal Disclaimer</a></li>
-                <li><a href="/legal/legal-notice/">Legal Notice</a></li>
-                <li><a href="/legal/terms-of-service/">Terms of Service</a></li>
-                <li><a href="/legal/privacy-policy/">Privacy Policy</a></li>
-                <li><a href="/legal/how-we-use-your-data/">How We Use Your Data</a></li>
+            <a
+                class="dropdown-toggle"
+                href="/legal/"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="legal-navigation"
+            >
+                Legal
+            </a>
+
+            <ul id="legal-navigation" class="dropdown" aria-label="Legal">
+                <li>
+                    <a href="/legal/legal-waiver/">Legal Waiver</a>
+                </li>
+                <li>
+                    <a href="/legal/legal-disclaimer/">Legal Disclaimer</a>
+                </li>
+                <li>
+                    <a href="/legal/legal-notice/">Legal Notice</a>
+                </li>
+                <li>
+                    <a href="/legal/terms-of-service/">Terms of Service</a>
+                </li>
+                <li>
+                    <a href="/legal/privacy-policy/">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="/legal/how-we-use-your-data/">How We Use Your Data</a>
+                </li>
             </ul>
         </li>
 
-        <li><a href="/donate/">Donate</a></li>
-        <li><a href="/contact/">Contact</a></li>
+        <li>
+            <a href="/donate/">Donate</a>
+        </li>
+
+        <li>
+            <a href="/contact/">Contact</a>
+        </li>
     </ul>
 </nav>
