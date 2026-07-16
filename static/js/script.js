@@ -1,9 +1,9 @@
 'use strict';
 
 const INCLUDES={
-    header:'/partials/header.html',
-    nav:'/partials/nav.html',
-    footer:'/partials/footer.html'
+    header:'/_partials/header.html',
+    nav:'/_partials/nav.html',
+    footer:'/_partials/footer.html'
 };
 
 const MOBILE_NAV_QUERY='(max-width:900px)';
