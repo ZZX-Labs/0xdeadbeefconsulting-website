@@ -150,7 +150,6 @@ Created, maintained, and operated by:
 Founder, ZZX-Labs R&D
 Lead Architect, [0xdeadbeef] Consulting
 Bitcoin-maximalist | FOSS advocate | Cypherpunk builder
-MIT, Harvard, Tyler School of Art, Temple, PSU
 
 
 ---
