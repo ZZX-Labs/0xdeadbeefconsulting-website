@@ -6,8 +6,11 @@ const INCLUDES={
     footer:'/partials/footer.html'
 };
 
+const MOBILE_NAV_QUERY='(max-width:900px)';
+
 document.addEventListener('DOMContentLoaded',async()=>{
     await loadIncludes();
+
     initializeNavigation();
     initializeActiveLinks();
     initializeHeaderScroll();
@@ -20,43 +23,49 @@ async function loadIncludes(root=document){
     while(true){
         const elements=[...root.querySelectorAll('[include-data]')];
 
-        if(!elements.length) break;
+        if(!elements.length) return;
 
-        await Promise.all(elements.map(async element=>{
-            const name=element.getAttribute('include-data');
-            const includeURL=INCLUDES[name];
+        await Promise.all(elements.map(loadInclude));
+    }
+}
 
-            element.removeAttribute('include-data');
+async function loadInclude(element){
+    const name=element.getAttribute('include-data');
+    const includeURL=INCLUDES[name];
 
-            if(!name||!includeURL){
-                console.error(`Unknown include component: ${name||'(empty)'}`);
-                element.setAttribute('include-error',name||'unknown');
-                return;
+    /*
+     * Remove the loading attribute before fetching. This prevents a failed
+     * component from being processed repeatedly by loadIncludes().
+     */
+    element.removeAttribute('include-data');
+
+    if(!name||!includeURL){
+        console.error(`Unknown include component: ${name||'(empty)'}`);
+        element.setAttribute('include-error',name||'unknown');
+        return;
+    }
+
+    try{
+        const response=await fetch(includeURL,{
+            method:'GET',
+            cache:'no-store',
+            credentials:'same-origin',
+            headers:{
+                Accept:'text/html'
             }
+        });
 
-            try{
-                const response=await fetch(includeURL,{
-                    method:'GET',
-                    cache:'no-store',
-                    credentials:'same-origin',
-                    headers:{
-                        Accept:'text/html'
-                    }
-                });
+        if(!response.ok){
+            throw new Error(
+                `${response.status} ${response.statusText}: ${includeURL}`
+            );
+        }
 
-                if(!response.ok){
-                    throw new Error(
-                        `${response.status} ${response.statusText}: ${includeURL}`
-                    );
-                }
-
-                element.innerHTML=await response.text();
-                element.setAttribute('include-loaded',name);
-            }catch(error){
-                console.error(`Unable to load include "${name}":`,error);
-                element.setAttribute('include-error',name);
-            }
-        }));
+        element.innerHTML=await response.text();
+        element.setAttribute('include-loaded',name);
+    }catch(error){
+        console.error(`Unable to load include "${name}":`,error);
+        element.setAttribute('include-error',name);
     }
 }
 
@@ -64,62 +73,47 @@ function initializeNavigation(){
     const menuToggle=document.querySelector('.menu-toggle');
     const navLinks=document.querySelector('.nav-links');
 
-    if(menuToggle&&navLinks){
-        menuToggle.setAttribute('aria-expanded','false');
+    if(!menuToggle||!navLinks) return;
 
-        menuToggle.addEventListener('click',()=>{
-            const open=navLinks.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded','false');
+    menuToggle.setAttribute('aria-label','Open navigation menu');
 
-            menuToggle.setAttribute('aria-expanded',String(open));
-            document.body.classList.toggle('menu-open',open);
-        });
-    }
+    menuToggle.addEventListener('click',()=>{
+        const open=!navLinks.classList.contains('open');
+
+        setNavigationState(menuToggle,navLinks,open);
+    });
 
     document.querySelectorAll('.dropdown-toggle').forEach(toggle=>{
         toggle.setAttribute('aria-expanded','false');
 
         toggle.addEventListener('click',event=>{
-            const parent=toggle.closest('li');
+            const parent=toggle.closest('.submenu');
 
             if(!parent) return;
 
-            if(window.matchMedia('(max-width:900px)').matches){
-                event.preventDefault();
-            }
+            /*
+             * On desktop, the top-level link remains navigable. CSS may display
+             * the dropdown through hover or focus. On mobile, clicking toggles
+             * the submenu instead of navigating immediately.
+             */
+            if(!window.matchMedia(MOBILE_NAV_QUERY).matches) return;
 
-            const open=parent.classList.toggle('open');
+            event.preventDefault();
 
-            toggle.setAttribute('aria-expanded',String(open));
+            const open=!parent.classList.contains('open');
 
-            document.querySelectorAll('.nav-links li.open').forEach(item=>{
-                if(item===parent) return;
-
-                item.classList.remove('open');
-
-                const itemToggle=item.querySelector(':scope > .dropdown-toggle');
-
-                if(itemToggle){
-                    itemToggle.setAttribute('aria-expanded','false');
-                }
-            });
+            closeDropdowns(parent);
+            setDropdownState(parent,toggle,open);
         });
     });
 
     document.addEventListener('click',event=>{
-        if(!menuToggle||!navLinks) return;
-
         const insideNavigation=navLinks.contains(event.target);
         const insideToggle=menuToggle.contains(event.target);
 
-        if(
-            navLinks.classList.contains('open')&&
-            !insideNavigation&&
-            !insideToggle
-        ){
-            closeNavigation(menuToggle,navLinks);
-        }
-
-        if(!insideNavigation){
+        if(!insideNavigation&&!insideToggle){
+            setNavigationState(menuToggle,navLinks,false);
             closeDropdowns();
         }
     });
@@ -127,27 +121,46 @@ function initializeNavigation(){
     document.addEventListener('keydown',event=>{
         if(event.key!=='Escape') return;
 
-        closeNavigation(menuToggle,navLinks);
+        const navigationWasOpen=navLinks.classList.contains('open');
+        const dropdownWasOpen=Boolean(
+            document.querySelector('.nav-links .submenu.open')
+        );
+
+        setNavigationState(menuToggle,navLinks,false);
         closeDropdowns();
-        menuToggle?.focus();
+
+        if(navigationWasOpen||dropdownWasOpen){
+            menuToggle.focus();
+        }
     });
 
     window.addEventListener('resize',()=>{
         if(window.matchMedia('(min-width:901px)').matches){
-            closeNavigation(menuToggle,navLinks);
+            setNavigationState(menuToggle,navLinks,false);
             closeDropdowns();
         }
     });
 }
 
-function closeNavigation(menuToggle,navLinks){
-    navLinks?.classList.remove('open');
-    menuToggle?.setAttribute('aria-expanded','false');
-    document.body.classList.remove('menu-open');
+function setNavigationState(menuToggle,navLinks,open){
+    navLinks.classList.toggle('open',open);
+    menuToggle.setAttribute('aria-expanded',String(open));
+    menuToggle.setAttribute(
+        'aria-label',
+        open?'Close navigation menu':'Open navigation menu'
+    );
+    document.body.classList.toggle('menu-open',open);
 }
 
-function closeDropdowns(){
-    document.querySelectorAll('.nav-links li.open').forEach(item=>{
+function setDropdownState(parent,toggle,open){
+    parent.classList.toggle('open',open);
+    toggle.setAttribute('aria-expanded',String(open));
+}
+
+function closeDropdowns(exception=null){
+    document.querySelectorAll('.nav-links .submenu.open').forEach(item=>{
+        if(item===exception) return;
+
         item.classList.remove('open');
 
         const toggle=item.querySelector(':scope > .dropdown-toggle');
@@ -200,16 +213,18 @@ function initializeActiveLinks(){
 
         const submenu=link.closest('.submenu');
 
-        if(submenu){
-            submenu
-                .querySelector(':scope > a')
-                ?.classList.add('active');
+        if(!submenu) return;
+
+        const parentLink=submenu.querySelector(':scope > .dropdown-toggle');
+
+        if(parentLink){
+            parentLink.classList.add('active');
         }
     });
 }
 
 function initializeHeaderScroll(){
-    const header=document.querySelector('header');
+    const header=document.querySelector('.header, .site-header, header');
 
     if(!header) return;
 
@@ -248,7 +263,11 @@ function initializeSmoothScroll(){
                 block:'start'
             });
 
-            history.pushState(null,'',href);
+            if(history.pushState){
+                history.pushState(null,'',href);
+            }else{
+                window.location.hash=href;
+            }
         });
     });
 }
@@ -281,7 +300,7 @@ function initializeCopyButtons(){
             const originalText=button.textContent;
 
             try{
-                await navigator.clipboard.writeText(value);
+                await copyText(value);
 
                 button.textContent='Copied';
                 button.classList.add('copied');
@@ -301,6 +320,35 @@ function initializeCopyButtons(){
             }
         });
     });
+}
+
+async function copyText(value){
+    if(
+        navigator.clipboard&&
+        window.isSecureContext
+    ){
+        await navigator.clipboard.writeText(value);
+        return;
+    }
+
+    const textarea=document.createElement('textarea');
+
+    textarea.value=value;
+    textarea.setAttribute('readonly','');
+    textarea.style.position='fixed';
+    textarea.style.opacity='0';
+    textarea.style.pointerEvents='none';
+
+    document.body.append(textarea);
+    textarea.select();
+
+    const copied=document.execCommand('copy');
+
+    textarea.remove();
+
+    if(!copied){
+        throw new Error('Clipboard operation failed.');
+    }
 }
 
 function initializeCurrentYear(){
