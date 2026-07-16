@@ -1,7 +1,10 @@
 'use strict';
 
-const SCRIPT_URL=document.currentScript?.src||new URL('/static/js/script.js',window.location.href).href;
-const SITE_ROOT=new URL('../../',SCRIPT_URL);
+const INCLUDES={
+    header:'/partials/header.html',
+    nav:'/partials/nav.html',
+    footer:'/partials/footer.html'
+};
 
 document.addEventListener('DOMContentLoaded',async()=>{
     await loadIncludes();
@@ -15,23 +18,22 @@ document.addEventListener('DOMContentLoaded',async()=>{
 
 async function loadIncludes(root=document){
     while(true){
-        const includes=[...root.querySelectorAll('[data-include]')];
+        const elements=[...root.querySelectorAll('[data-include]')];
 
-        if(!includes.length) break;
+        if(!elements.length) break;
 
-        await Promise.all(includes.map(async element=>{
-            const includePath=element.dataset.include;
+        await Promise.all(elements.map(async element=>{
+            const name=element.dataset.include;
+            const includeURL=INCLUDES[name]||name;
 
-            if(!includePath){
-                element.removeAttribute('data-include');
+            element.removeAttribute('data-include');
+
+            if(!includeURL){
                 return;
             }
 
-            const normalizedPath=includePath.replace(/^\/+/,'');
-            const includeURL=new URL(normalizedPath,SITE_ROOT);
-
             try{
-                const response=await fetch(includeURL.href,{
+                const response=await fetch(includeURL,{
                     method:'GET',
                     cache:'no-store',
                     credentials:'same-origin',
@@ -42,27 +44,23 @@ async function loadIncludes(root=document){
 
                 if(!response.ok){
                     throw new Error(
-                        `${response.status} ${response.statusText}: ${includeURL.href}`
+                        `${response.status} ${response.statusText}: ${includeURL}`
                     );
                 }
 
-                const html=await response.text();
-
-                element.innerHTML=html;
-                element.removeAttribute('data-include');
-                element.dataset.includeLoaded=includeURL.href;
+                element.innerHTML=await response.text();
+                element.dataset.includeLoaded=name;
             }catch(error){
-                console.error('Partial include failed:',error);
+                console.error(`Unable to load include "${name}":`,error);
 
                 element.innerHTML=`
                     <div class="notice notice-danger">
                         Unable to load site component:
-                        <code>${escapeHTML(includeURL.href)}</code>
+                        <code>${escapeHTML(name)}</code>
                     </div>
                 `;
 
-                element.removeAttribute('data-include');
-                element.dataset.includeError=includeURL.href;
+                element.dataset.includeError=name;
             }
         }));
     }
@@ -185,7 +183,7 @@ function initializeActiveLinks(){
         let url;
 
         try{
-            url=new URL(href,SITE_ROOT);
+            url=new URL(href,window.location.origin);
         }catch{
             return;
         }
