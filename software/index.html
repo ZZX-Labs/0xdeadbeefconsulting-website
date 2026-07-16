@@ -14,10 +14,11 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="/static/js/script.js" defer></script>
 </head>
+<header>
+    <div data-include="/_partials/header.html"></div>
+</header>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-
-    <div data-include="/_partials/header.html"></div>
 
     <main id="main-content">
         <section class="hero" aria-labelledby="software-title">
@@ -207,10 +208,12 @@
             </div>
         </section>
     </main>
-
+</body>
+<footer>
     <div data-include="/_partials/footer.html"></div>
+</footer>
 
-    <script type="module">
+<script type="module">
         const ROOT_MANIFEST="https://zzx-labs.io/projects/manifest.json";
         const PROJECT_ROOT="https://zzx-labs.io/projects";
         const SOFTWARE_CATEGORIES=[
@@ -670,6 +673,5 @@
         elements.reset.addEventListener("click",resetFilters);
 
         loadProjects();
-    </script>
-</body>
+</script>
 </html>
