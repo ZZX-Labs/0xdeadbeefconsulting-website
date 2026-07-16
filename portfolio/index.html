@@ -14,10 +14,9 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="/static/js/script.js" defer></script>
 </head>
-<header>
-    <div data-include="/_partials/header.html"></div>
-</header>
 <body>
+    <div data-include="header"></div>
+    
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <main id="main-content">
@@ -221,7 +220,10 @@
         </section>
     </main>
 
-    <script type="module">
+    <div data-include="footer"></div>
+</body>
+
+<script type="module">
         const PROJECT_ROOT="https://zzx-labs.io/projects";
         const ROOT_MANIFEST=`${PROJECT_ROOT}/manifest.json`;
 
@@ -992,9 +994,6 @@
         elements.reset.addEventListener("click",resetFilters);
 
         loadPortfolio();
-    </script>
-</body>
-<footer>
-    <div data-include="/_partials/footer.html"></div>
-</footer>
+</script>
+    
 </html>
